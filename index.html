@@ -22,42 +22,70 @@
 			const materialA = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
 			const cylinder = new THREE.Mesh( geometryA, materialA );
 
-			const geometryB = new THREE.BoxGeometry(6, 1.5, 0.40);
+			const geometryB = new THREE.BoxGeometry(6, 1, 0.40);
 			const materialB = new THREE.MeshBasicMaterial( { color: 0xffffff } );
+			const geometryC = new THREE.BoxGeometry(3, 1, 0.40);
 			const box1 = new THREE.Mesh( geometryB, materialB );
 			const box2 = new THREE.Mesh( geometryB, materialB );
-			const geometryC = new THREE.BoxGeometry(3, 1.5, 0.40);
 			const box3 = new THREE.Mesh( geometryC, materialB );
+
+			const box1B = new THREE.Mesh( geometryB, materialB );
+			const box2B = new THREE.Mesh( geometryB, materialB );
+			const box3B = new THREE.Mesh( geometryC, materialB );
+
+			const boxGroup1 = new THREE.Group();
+			boxGroup1.add(box1);
+			boxGroup1.add(box2);
+			boxGroup1.add(box3);
+			
+			box1.position.z = -1;
+			box2.position.z = 0.25;
+			box3.position.z = 1.5;
+
+			box3.position.x = 1.5;
+
+			boxGroup1.position.y = 0.25;
+
+			boxGroup1.rotation.y = 0.6;
+
+
+			const boxGroup2 = new THREE.Group();
+			boxGroup2.add(box1B);
+			boxGroup2.add(box2B);
+			boxGroup2.add(box3B);
+			
+			box1B.position.z = -1;
+			box2B.position.z = 0.25;
+			box3B.position.z = 1.5;
+
+			box3B.position.x = -1.5;
+
+			boxGroup2.position.y = -0.25;
+
+			boxGroup2.rotation.y = -0.6;
+
 
 			const logo = new THREE.Group();
 			logo.add(cylinder);
-			logo.add(box1);
-			logo.add(box2);
-			logo.add(box3);
+			logo.add(boxGroup1);
+			logo.add(boxGroup2);
 			
+			logo.rotation.x = Math.PI / 2;
+
 
 			const group = new THREE.Group();
 			group.add(logo);
 			scene.add(group);
 
-			box1.position.z = -1;
-			box2.position.z = 0.25;
-			box3.position.z = 1.5;
-			box3.position.x = 1.5;
-			// box3.position.y = 0.25;
 
-			camera.position.z = 20;
+			camera.position.z = 15;
 			
-			// logo.rotation.z = 1.5;
-			logo.rotation.x = Math.PI / 2;
-			logo.rotation.y = 0.6;
+			
 
 			const animate = function () {
 				requestAnimationFrame( animate );
 
 				group.rotation.y -= 0.01;
-				// logo.rotation.z += 0.01;
-				// logo.rotation.y += 0.01;
 
 				renderer.render( scene, camera );
 			};
