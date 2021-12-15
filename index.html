@@ -18,18 +18,46 @@
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			document.body.appendChild( renderer.domElement );
 
-			const geometry = new THREE.BoxGeometry();
-			const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-			const cube = new THREE.Mesh( geometry, material );
-			scene.add( cube );
+			const geometryA = new THREE.CylinderGeometry(5, 5, 1, 32);
+			const materialA = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
+			const cylinder = new THREE.Mesh( geometryA, materialA );
 
-			camera.position.z = 5;
+			const geometryB = new THREE.BoxGeometry(6, 1.5, 0.40);
+			const materialB = new THREE.MeshBasicMaterial( { color: 0xffffff } );
+			const box1 = new THREE.Mesh( geometryB, materialB );
+			const box2 = new THREE.Mesh( geometryB, materialB );
+			const geometryC = new THREE.BoxGeometry(3, 1.5, 0.40);
+			const box3 = new THREE.Mesh( geometryC, materialB );
+
+			const logo = new THREE.Group();
+			logo.add(cylinder);
+			logo.add(box1);
+			logo.add(box2);
+			logo.add(box3);
+			
+
+			const group = new THREE.Group();
+			group.add(logo);
+			scene.add(group);
+
+			box1.position.z = -1;
+			box2.position.z = 0.25;
+			box3.position.z = 1.5;
+			box3.position.x = 1.5;
+			// box3.position.y = 0.25;
+
+			camera.position.z = 20;
+			
+			// logo.rotation.z = 1.5;
+			logo.rotation.x = Math.PI / 2;
+			logo.rotation.y = 0.6;
 
 			const animate = function () {
 				requestAnimationFrame( animate );
 
-				cube.rotation.x += 0.01;
-				cube.rotation.y += 0.01;
+				group.rotation.y -= 0.01;
+				// logo.rotation.z += 0.01;
+				// logo.rotation.y += 0.01;
 
 				renderer.render( scene, camera );
 			};
